@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1abea727-e675-497f-9898-1606a789d87a" name="更改" comment="">
+      <change afterPath="D:/project/WebstormProjects/z-capture/.gitignore" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/.idea/.gitignore" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/dist/test/1.png" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/dist/test/index.html" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/package.json" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/src/core/option.ts" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/src/core/z.capture.ts" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/src/index.ts" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/src/public-api.ts" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="D:/project/WebstormProjects/z-capture" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2oBSDI5WOxp3SEUQ9OxWAHdJdgK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/project/WebstormProjects/z-capture/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "D:\\project\\WebstormProjects\\z-capture\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\project\WebstormProjects\z-capture\src" />
+      <recent name="D:\project\WebstormProjects\z-capture\src\test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\project\WebstormProjects\z-capture\src\common" />
+      <recent name="D:\project\WebstormProjects\z-capture\dist" />
+      <recent name="D:\project\WebstormProjects\z-capture\src\core" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23726.96" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="1abea727-e675-497f-9898-1606a789d87a" name="更改" comment="" />
+      <created>1730341355264</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730341355264</updated>
+      <workItem from="1730341356294" duration="15878000" />
+      <workItem from="1730431837530" duration="6474000" />
+      <workItem from="1730684570270" duration="25237000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,5 @@
+# 默认忽略的文件
+/../../../../../:project/WebstormProjects/z-capture/.idea/shelf/
+/../../../../../:project/WebstormProjects/z-capture/.idea/workspace.xml
+# 基于编辑器的 HTTP 客户端请求
+/../../../../../:project/WebstormProjects/z-capture/.idea/httpRequests/

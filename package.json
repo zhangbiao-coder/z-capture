@@ -1,0 +1,42 @@
+{
+  "name": "z-capture",
+  "version": "1.0.0",
+  "description": "一款简单的网页截屏工具(a simple web screen capture tool)",
+  "scripts": {
+    "build": "rollup --config",
+    "buildesm2015": "rollup --config rollup.config.esm2015.mjs"
+  },
+  "module": "dist/esm2015/axpager.mjs",
+  "types": "dist/lib/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGE_NOTE.md",
+    "LICENSE"
+  ],
+  "private": false,
+  "keywords": [
+    "z-capture",
+    "capture",
+    "screen capture",
+    "web capture"
+  ],
+  "author": "zhangbiao-coder",
+  "license": "MIT",
+  "repository": {
+    "type": "GIT",
+    "url": "https://github.com/zhangbiao-coder/z-capture.git"
+  },
+  "homepage": "https://github.com/zhangbiao-coder/z-capture",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.3.3",
+    "rollup": "^3.28.0",
+    "ts-loader": "^9.4.4",
+    "tslib": "^2.6.1",
+    "typescript": "^5.5.3"
+  }
+}
