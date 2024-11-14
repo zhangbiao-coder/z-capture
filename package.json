@@ -6,13 +6,12 @@
     "build": "rollup --config",
     "buildesm2015": "rollup --config rollup.config.esm2015.mjs"
   },
-  "module": "dist/esm2015/axpager.mjs",
+  "module": "dist/esm2015/z-capture.mjs",
   "types": "dist/lib/index.d.ts",
   "type": "module",
   "files": [
     "dist",
     "README.md",
-    "CHANGE_NOTE.md",
     "LICENSE"
   ],
   "private": false,
@@ -38,5 +37,8 @@
     "ts-loader": "^9.4.4",
     "tslib": "^2.6.1",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "html2canvas":"1.4.1"
   }
 }
