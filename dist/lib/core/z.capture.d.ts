@@ -17,7 +17,7 @@ declare const cutHandleCanvasMouseDown: unique symbol;
 declare const isWithinCutShotArea: unique symbol;
 declare const drawFreeRect: unique symbol;
 declare const rightCloseCut: unique symbol;
-declare const capture: unique symbol;
+declare const correctionCoord: unique symbol;
 export declare class ZCapture {
     private option;
     private cutImageStatus;
@@ -33,10 +33,9 @@ export declare class ZCapture {
      * html2canvas：html转canvas方式实现截图
      * mediaDevices：使用浏览器的录屏设备来实现截图
      */
-    private shotPlugin;
-    constructor(option?: Option);
-    static init(option?: Option): ZCapture;
-    [capture](): boolean;
+    constructor();
+    static capture(option?: Option): any;
+    capture(option?: Option): boolean;
     [intoShot](): void;
     MASK_OPACITY: number;
     [drawImageMask](x: number, y: number, width: number, height: number, opacity: number): void;
@@ -49,6 +48,7 @@ export declare class ZCapture {
     private cutMouseState;
     private canvasState;
     [restoreCanvasState](): void;
+    [correctionCoord](old_x: number, old_y: number): number[];
     [cutHandleCanvasMouseDown](event: MouseEvent): void;
     [cutHandleCanvasMouseMove](event: MouseEvent): void;
     [drawFreeLine](endX: number, endY: number): void;

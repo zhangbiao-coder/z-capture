@@ -4,20 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1abea727-e675-497f-9898-1606a789d87a" name="更改" comment="first">
-      <change afterPath="D:/project/WebstormProjects/z-capture/LICENSE" afterDir="false" />
-      <change afterPath="D:/project/WebstormProjects/z-capture/README.md" afterDir="false" />
-      <change afterPath="D:/project/WebstormProjects/z-capture/rollup.config.esm2015.mjs" afterDir="false" />
-      <change afterPath="D:/project/WebstormProjects/z-capture/rollup.config.mjs" afterDir="false" />
-      <change afterPath="D:/project/WebstormProjects/z-capture/tsconfig.es2015.json" afterDir="false" />
+    <list default="true" id="1abea727-e675-497f-9898-1606a789d87a" name="更改" comment="sc">
+      <change afterPath="D:/project/WebstormProjects/z-capture/dist/example/img.png" afterDir="false" />
+      <change afterPath="D:/project/WebstormProjects/z-capture/dist/example/index.html" afterDir="false" />
       <change beforePath="D:/project/WebstormProjects/z-capture/.idea/workspace.xml" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/dist/core/z.capture.js" beforeDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/dist/index.js" beforeDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/dist/test/1.png" beforeDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/dist/test/index.html" beforeDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/package-lock.json" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/package-lock.json" afterDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/package.json" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/package.json" afterDir="false" />
-      <change beforePath="D:/project/WebstormProjects/z-capture/tsconfig.json" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/tsconfig.json" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/dist/lib/core/option.d.ts" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/dist/lib/core/option.d.ts" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/dist/lib/core/z.capture.d.ts" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/dist/lib/core/z.capture.d.ts" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.js" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.js" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.min.js" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.min.js" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.min.js.map" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/dist/z-capture.umd.min.js.map" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/rollup.config.esm2015.mjs" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/rollup.config.esm2015.mjs" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/rollup.config.mjs" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/rollup.config.mjs" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/src/core/option.ts" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/src/core/option.ts" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/src/core/z.capture.ts" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/src/core/z.capture.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,26 +26,26 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="TypeScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="D:/project/WebstormProjects/z-capture" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "zhangbiao-coder"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zhangbiao-coder&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/zhangbiao-coder/z-capture.git",
-    "accountId": "9bac2fee-dd95-4304-8a9a-1a7507220492"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zhangbiao-coder/z-capture.git&quot;,
+    &quot;accountId&quot;: &quot;9bac2fee-dd95-4304-8a9a-1a7507220492&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -59,24 +58,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/project/WebstormProjects/z-capture",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.build.executor": "Run",
-    "npm.buildesm2015.executor": "Run",
-    "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "D:\\project\\WebstormProjects\\z-capture\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/project/WebstormProjects/z-capture&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.buildesm2015.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\project\\WebstormProjects\\z-capture\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\project\WebstormProjects\z-capture" />
@@ -89,7 +88,7 @@
       <recent name="D:\project\WebstormProjects\z-capture\src\core" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.buildesm2015">
+  <component name="RunManager" selected="npm.build">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="D:/project/WebstormProjects/z-capture/package.json" />
       <command value="run" />
@@ -112,8 +111,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.buildesm2015" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.buildesm2015" />
       </list>
     </recent_temporary>
   </component>
@@ -134,7 +133,8 @@
       <updated>1730341355264</updated>
       <workItem from="1730341356294" duration="15878000" />
       <workItem from="1730431837530" duration="6474000" />
-      <workItem from="1730684570270" duration="26025000" />
+      <workItem from="1730684570270" duration="57748000" />
+      <workItem from="1731987219975" duration="1683000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -144,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731579900816</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="sc">
+      <option name="closed" value="true" />
+      <created>1731580793743</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731580793743</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +160,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
-    <option name="LAST_COMMIT_MESSAGE" value="first" />
+    <MESSAGE value="sc" />
+    <option name="LAST_COMMIT_MESSAGE" value="sc" />
   </component>
 </project>

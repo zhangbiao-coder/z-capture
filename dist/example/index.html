@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <button onclick="atuoCapture()">截图</button>
+    <button onclick="atuoCapture2()">截图2</button>
+</div>
+<div><img src="img.png"></div>
+</body>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="../z-capture.umd.js"></script>
+<script>
+    function atuoCapture() {
+        ZCapture.ZCapture.capture(
+            {
+                engine:"mediaDevices",
+                before: () => {
+                    console.log("hello");
+                    return true
+                }
+            }
+        );
+    }
+    function atuoCapture2() {
+        ZCapture.ZCapture.capture(
+            {
+                before: () => {
+                    console.log("hello2");
+                    return true
+                }
+            }
+        );
+    }
+</script>
+</html>

@@ -8,11 +8,11 @@ export default {
         {
             file: 'dist/z-capture.umd.js',
             format: 'umd',
-            name: 'z-capture'
+            name: 'ZCapture'
         }, {
             file: 'dist/z-capture.umd.min.js',
             format: 'umd',
-            name: 'z-capture',
+            name: 'ZCapture',
             sourcemap: true,
             plugins: [terser()]
         }

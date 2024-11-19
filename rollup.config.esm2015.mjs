@@ -7,7 +7,7 @@ export default {
         {
             file: 'dist/esm2015/z-capture.mjs',
             format: 'esm',
-            name: 'z-capture',
+            name: 'ZCapture',
             sourcemap: true,
         }
     ],
