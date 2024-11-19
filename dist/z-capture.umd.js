@@ -490,6 +490,6 @@
         return ZCapture;
     }());
 
-    exports.ZCapture = ZCapture;
+    exports.ZCUtil = ZCapture;
 
 }));

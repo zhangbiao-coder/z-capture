@@ -1,6 +1,6 @@
 {
   "name": "z-capture",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一款简单的网页截屏工具(a simple web screen capture tool)",
   "scripts": {
     "build": "rollup --config",

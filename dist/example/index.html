@@ -14,8 +14,11 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="../z-capture.umd.js"></script>
 <script>
+    let {ZCUtil} = ZCapture;
     function atuoCapture() {
-        ZCapture.ZCapture.capture(
+        console.log(ZCapture);
+        console.log(ZCUtil);
+        ZCUtil.capture(
             {
                 engine:"mediaDevices",
                 before: () => {
@@ -26,7 +29,7 @@
         );
     }
     function atuoCapture2() {
-        ZCapture.ZCapture.capture(
+        ZCUtil.capture(
             {
                 before: () => {
                     console.log("hello2");
