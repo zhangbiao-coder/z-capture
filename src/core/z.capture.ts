@@ -27,13 +27,9 @@ const defaultOption: Option = {
     before: () => true,
     start: () => void (0),
     end: () => void (0),
-    save: (capImg: string) => {
-        console.log(capImg);
-    },
+    save: (capImg: string) => {console.log(capImg)},
     after: () => void (0),
-    error: (e) => {
-        console.error(e);
-    },
+    error: (e) => {console.error(e)},
 }
 
 const icons = {

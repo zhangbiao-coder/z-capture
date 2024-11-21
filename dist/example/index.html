@@ -15,7 +15,7 @@
 </p>
 <p style="margin-top: 1.5em;color: #413e46;">Congratulations! Your app is running.</p>
 </body>
-<script src="./html2canvas-pro.js"></script>
+<script src="../html2canvas-pro.js"></script>
 <script src="../z-capture.umd.js"></script>
 <script>
     let {ZCUtil} = ZCapture;
@@ -28,7 +28,6 @@
                 engine: "mediaDevices",
                 end: (screenImd) => {
                     console.log(screenImd);
-                    return true
                 }
             }
         );
@@ -39,7 +38,6 @@
             {
                 end: (screenImd) => {
                     console.log(screenImd);
-                    return true
                 }
             }
         );
