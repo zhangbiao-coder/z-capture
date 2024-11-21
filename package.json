@@ -1,6 +1,6 @@
 {
   "name": "z-capture",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "一款简单的网页截屏工具(a simple web screen capture tool)",
   "scripts": {
     "build": "rollup --config",
@@ -39,6 +39,6 @@
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "html2canvas":"1.4.1"
+    "html2canvas-pro": "^1.5.8"
   }
 }

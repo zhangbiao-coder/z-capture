@@ -1,6 +1,6 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('html2canvas')) :
-    typeof define === 'function' && define.amd ? define(['exports', 'html2canvas'], factory) :
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('html2canvas-pro')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'html2canvas-pro'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ZCapture = {}, global.html2canvas));
 })(this, (function (exports, html2canvas) { 'use strict';
 
@@ -71,7 +71,6 @@
             this.cutEditStatus = false;
             //启用画框编辑
             this.cutRectStatus = false;
-            console.log("构建截图对象");
             this.captureWorkSpace = window.document.getElementById("z-capture-workspace-0726");
             var first = false;
             if (!this.captureWorkSpace) {
@@ -164,35 +163,44 @@
             if (!before) {
                 return false;
             }
-            console.log(this.option);
             if (this.option.engine === "mediaDevices") {
-                var video_1 = window.document.createElement("video");
+                var video_1 = document.createElement("video");
                 var gdmOptions = {
-                    video: true,
+                    video: {
+                        // 尽量使用显示器的最大分辨率
+                        width: { ideal: window.screen.width },
+                        height: { ideal: window.screen.height },
+                        frameRate: { ideal: 30 } // 可根据需求调整帧率
+                    },
                     preferCurrentTab: true
                 };
                 var mediaDevices = navigator.mediaDevices;
                 mediaDevices.getDisplayMedia(gdmOptions).then(function (captureStream) {
-                    //截图开始事件
+                    // 截图开始事件
                     _this.option.start();
                     video_1.srcObject = captureStream;
-                    //500毫秒的延时是为了关闭录频提示框
-                    setTimeout(function () {
+                    // 确保视频流加载完成
+                    video_1.onloadedmetadata = function () {
                         video_1.play().then(function () {
                             if (_this.canvas && _this.context) {
-                                _this.canvas.width = window.document.body.clientWidth;
-                                _this.canvas.height = window.document.body.clientHeight;
-                                _this.context.drawImage(video_1, 0, 0, _this.canvas.width, _this.canvas.height);
+                                // 设置 canvas 宽高为视频分辨率的设备像素比版本
+                                var scale = window.devicePixelRatio || 1;
+                                var videoWidth = video_1.videoWidth * scale;
+                                var videoHeight = video_1.videoHeight * scale;
+                                _this.canvas.width = videoWidth;
+                                _this.canvas.height = videoHeight;
+                                // 绘制高分辨率的截图
+                                _this.context.drawImage(video_1, 0, 0, videoWidth, videoHeight);
                             }
-                            //进入截图界面，初始化状态
+                            // 进入截图界面，初始化状态
                             _this[intoShot]();
+                            // 停止捕获的媒体流
                             captureStream.getTracks().forEach(function (track) { return track.stop(); });
                             video_1.remove();
                         });
-                    }, 500);
-                    //用户取消共享，会抛出异常
+                    };
                 }).catch(function (err) {
-                    //异常
+                    // 异常处理
                     _this.option.error(err);
                     if (err) {
                         var e = err.toString();
@@ -203,25 +211,37 @@
                             console.error("Error: " + err);
                         }
                     }
-                    //出现异常，关闭截图
+                    // 出现异常，关闭截图
                     _this[closeCut]();
                 });
             }
             else {
                 //截图开始事件
                 this.option.start();
-                html2canvas(window.document.getElementsByTagName("body")[0], {
+                //调整清晰度
+                html2canvas(document.body, {
                     backgroundColor: 'white',
-                    useCORS: true, //支持图片跨域
-                    scale: 1 //设置放大倍数
+                    useCORS: true, // 支持图片跨域
+                    scale: window.devicePixelRatio || 1, // 设置为设备像素比，提升清晰度
                 }).then(function (canvas) {
                     if (_this.canvas && _this.context) {
-                        _this.canvas.width = window.document.body.clientWidth;
-                        _this.canvas.height = window.document.body.clientHeight;
-                        _this.context.drawImage(canvas, 0, 0, _this.canvas.width, _this.canvas.height);
+                        // 获取原始 canvas 的尺寸
+                        var originalWidth = canvas.width;
+                        var originalHeight = canvas.height;
+                        // 设置目标 canvas 的尺寸与原始 canvas 一致
+                        _this.canvas.width = originalWidth;
+                        _this.canvas.height = originalHeight;
+                        // 清除目标 canvas
+                        _this.context.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
+                        // 将高分辨率的 canvas 绘制到目标 canvas 上
+                        _this.context.drawImage(canvas, 0, 0, originalWidth, originalHeight);
                     }
-                    //进入截图界面，初始化状态
+                    // 进入截图界面，初始化状态
                     _this[intoShot]();
+                }).catch(function (error) {
+                    //异常
+                    _this.option.error(error);
+                    console.error('html2canvas 生成图片失败:', error);
                 });
             }
         };
@@ -243,7 +263,7 @@
             this.canvasState = undefined;
             setTimeout(function () {
                 if (_this.canvas) {
-                    _this.cutScreenDataURL = _this.canvas.toDataURL('image/jpeg');
+                    _this.cutScreenDataURL = _this.canvas.toDataURL('image/png');
                     _this[drawImageMask](0, 0, _this.canvas.width, _this.canvas.height, _this.MASK_OPACITY);
                     //截图完成
                     _this.option.end(_this.cutScreenDataURL);
@@ -477,8 +497,7 @@
                     shotCanvas.height = data.height;
                     shotContext.putImageData(data, 0, 0);
                     //jpeg格式，数据更小
-                    this.cutShotDataURL = shotCanvas.toDataURL('image/jpeg');
-                    console.log(this.option);
+                    this.cutShotDataURL = shotCanvas.toDataURL('image/png');
                     this.option.error("test-error");
                     //确定保存截图
                     this.option.save(this.cutShotDataURL);

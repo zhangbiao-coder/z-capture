@@ -1,4 +1,4 @@
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import {Option} from "./option";
 
 //‌保护对象属性‌：使用Symbol作为属性名可以隐藏对象的属性，使得在对象外部无法通过点语法访问这些属性，从而保护对象的私有属性‌
@@ -70,8 +70,6 @@ export class ZCapture {
      * mediaDevices：使用浏览器的录屏设备来实现截图
      */
     constructor() {
-        console.log("构建截图对象");
-
         this.captureWorkSpace = window.document.getElementById("z-capture-workspace-0726");
         let first = false;
         if (!this.captureWorkSpace) {
@@ -184,38 +182,49 @@ export class ZCapture {
         if (!before) {
             return false;
         }
-        console.log(this.option);
-
         if (this.option.engine === "mediaDevices") {
-            const video: any = window.document.createElement("video");
+            const video: HTMLVideoElement = document.createElement("video");
             const gdmOptions = {
-                video: true,
+                video: {
+                    // 尽量使用显示器的最大分辨率
+                    width: {ideal: window.screen.width},
+                    height: {ideal: window.screen.height},
+                    frameRate: {ideal: 30} // 可根据需求调整帧率
+                },
                 preferCurrentTab: true
-            }
-            const mediaDevices: any = navigator.mediaDevices;
+            };
+            const mediaDevices = navigator.mediaDevices;
 
             mediaDevices.getDisplayMedia(gdmOptions).then((captureStream: MediaStream) => {
-                //截图开始事件
+                // 截图开始事件
                 this.option.start();
-
                 video.srcObject = captureStream;
-                //500毫秒的延时是为了关闭录频提示框
-                setTimeout(() => {
+                // 确保视频流加载完成
+                video.onloadedmetadata = () => {
                     video.play().then(() => {
                         if (this.canvas && this.context) {
-                            this.canvas.width = window.document.body.clientWidth;
-                            this.canvas.height = window.document.body.clientHeight;
-                            this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.height);
+                            // 设置 canvas 宽高为视频分辨率的设备像素比版本
+                            const scale = window.devicePixelRatio || 1;
+                            const videoWidth = video.videoWidth * scale;
+                            const videoHeight = video.videoHeight * scale;
+
+                            this.canvas.width = videoWidth;
+                            this.canvas.height = videoHeight;
+
+                            // 绘制高分辨率的截图
+                            this.context.drawImage(video, 0, 0, videoWidth, videoHeight);
                         }
-                        //进入截图界面，初始化状态
+
+                        // 进入截图界面，初始化状态
                         this[intoShot]();
-                        captureStream.getTracks().forEach((track: any) => track.stop());
+
+                        // 停止捕获的媒体流
+                        captureStream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
                         video.remove();
                     });
-                }, 500);
-                //用户取消共享，会抛出异常
+                };
             }).catch((err: any) => {
-                //异常
+                // 异常处理
                 this.option.error(err);
 
                 if (err) {
@@ -226,25 +235,42 @@ export class ZCapture {
                         console.error("Error: " + err);
                     }
                 }
-                //出现异常，关闭截图
+                // 出现异常，关闭截图
                 this[closeCut]();
             });
         } else {
             //截图开始事件
             this.option.start();
-            html2canvas(window.document.getElementsByTagName("body")[0], {
+            //调整清晰度
+            html2canvas(document.body, {
                 backgroundColor: 'white',
-                useCORS: true, //支持图片跨域
-                scale: 1       //设置放大倍数
+                useCORS: true, // 支持图片跨域
+                scale: window.devicePixelRatio || 1, // 设置为设备像素比，提升清晰度
             }).then((canvas) => {
                 if (this.canvas && this.context) {
-                    this.canvas.width = window.document.body.clientWidth;
-                    this.canvas.height = window.document.body.clientHeight;
-                    this.context.drawImage(canvas, 0, 0, this.canvas.width, this.canvas.height);
+                    // 获取原始 canvas 的尺寸
+                    const originalWidth = canvas.width;
+                    const originalHeight = canvas.height;
+
+                    // 设置目标 canvas 的尺寸与原始 canvas 一致
+                    this.canvas.width = originalWidth;
+                    this.canvas.height = originalHeight;
+
+                    // 清除目标 canvas
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                    // 将高分辨率的 canvas 绘制到目标 canvas 上
+                    this.context.drawImage(canvas, 0, 0, originalWidth, originalHeight);
                 }
-                //进入截图界面，初始化状态
+                // 进入截图界面，初始化状态
                 this[intoShot]();
+            }).catch((error) => {
+                //异常
+                this.option.error(error);
+                console.error('html2canvas 生成图片失败:', error);
             });
+
+
         }
     };
 
@@ -267,7 +293,7 @@ export class ZCapture {
 
         setTimeout(() => {
             if (this.canvas) {
-                this.cutScreenDataURL = this.canvas.toDataURL('image/jpeg');
+                this.cutScreenDataURL = this.canvas.toDataURL('image/png');
                 this[drawImageMask](0, 0, this.canvas.width, this.canvas.height, this.MASK_OPACITY);
 
                 //截图完成
@@ -560,8 +586,7 @@ export class ZCapture {
                 shotCanvas.height = data.height;
                 shotContext.putImageData(data, 0, 0);
                 //jpeg格式，数据更小
-                this.cutShotDataURL = shotCanvas.toDataURL('image/jpeg');
-                console.log(this.option);
+                this.cutShotDataURL = shotCanvas.toDataURL('image/png');
                 this.option.error("test-error");
                 //确定保存截图
                 this.option.save(this.cutShotDataURL);

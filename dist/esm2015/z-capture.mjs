@@ -1,36 +1,4 @@
-import html2canvas from 'html2canvas';
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
-
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
+import html2canvas from 'html2canvas-pro';
 
 //‌保护对象属性‌：使用Symbol作为属性名可以隐藏对象的属性，使得在对象外部无法通过点语法访问这些属性，从而保护对象的私有属性‌
 const selPen = Symbol("selPen");
@@ -51,37 +19,40 @@ const cutHandleCanvasMouseDown = Symbol("cutHandleCanvasMouseDown");
 const isWithinCutShotArea = Symbol("isWithinCutShotArea");
 const drawFreeRect = Symbol("drawFreeRect");
 const rightCloseCut = Symbol("rightCloseCut");
-const capture = Symbol("capture");
+const correctionCoord = Symbol("correctionCoord");
 const defaultOption = {
     engine: 'html2canvas',
     before: () => true,
-    start: () => {
+    start: () => void (0),
+    end: () => void (0),
+    save: (capImg) => {
+        console.log(capImg);
     },
-    end: () => {
-    },
-    save: (baseImg) => () => __awaiter(void 0, void 0, void 0, function* () {
-        //保存操作，图片默认写入用户剪贴板
-        yield navigator.clipboard.writeText(baseImg);
-    }),
-    after: () => {
-    },
+    after: () => void (0),
     error: (e) => {
         console.error(e);
     },
 };
+const icons = {
+    pen: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>',
+    rect: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-336c0-8.8 7.2-16 16-16l336 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32C35.8 32 0 67.8 0 112L0 448zm160 0a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm192 0a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm-96 0a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm192 0a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM416 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm0 32a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-128a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>',
+    rect2: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 48l0 416L48 464 48 48l416 0zM48 0L0 0 0 48 0 464l0 48 48 0 416 0 48 0 0-48 0-416 0-48L464 0 48 0z"/></svg>',
+    eraser: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7L288 480l9.4 0L512 480c17.7 0 32-14.3 32-32s-14.3-32-32-32l-124.1 0L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416l-9.4 0-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/></svg>',
+    cancel: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>',
+    save: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>',
+};
 class ZCapture {
-    constructor(option) {
-        var _a, _b, _c, _d;
+    /**
+     * 截图插件选择(默认使用：html2canvas)
+     * html2canvas：html转canvas方式实现截图
+     * mediaDevices：使用浏览器的录屏设备来实现截图
+     */
+    constructor() {
+        var _a, _b, _c;
         this.option = {};
         //是否进入截图状态
         this.cutImageStatus = false;
         this.cutShotDataArray = new Array(4);
-        /**
-         * 截图插件选择(默认使用：html2canvas)
-         * html2canvas：html转canvas方式实现截图
-         * mediaDevices：使用浏览器的录屏设备来实现截图
-         */
-        this.shotPlugin = "html2canvas";
         this.MASK_OPACITY = 0.5;
         //鼠标按下开始坐标
         this.cutInitPos = new Array(2);
@@ -95,36 +66,47 @@ class ZCapture {
         this.cutEditStatus = false;
         //启用画框编辑
         this.cutRectStatus = false;
-        this.option = Object.assign({}, defaultOption, option);
         this.captureWorkSpace = window.document.getElementById("z-capture-workspace-0726");
         let first = false;
         if (!this.captureWorkSpace) {
-            this.captureWorkSpace = window.document.createElement("div");
-            this.captureWorkSpace.setAttribute("id", "z-capture-workspace-0726");
-            this.captureWorkSpace.setAttribute("class", "cutImageStatus");
-            this.captureWorkSpace.innerHTML = `
-                              <canvas class="screenCanvas"></canvas>
-                              <div class="cut-tool">
-                                <div class="tool-left">
-                                  <button data-btnType="t-pen-btn" type="button" title="自定义-画笔">笔</button>
-                                  <button data-btnType="t-rect-btn" type="button" title="矩形-画框">框</button>
-                                  <button data-btnType="t-clear-btn" type="button" title="清空画布">清</button>
-                                </div>
-                                <span class="tool-fg"></span>
-                                <div class="tool-right">
-                                  <button data-btnType="t-cancel-btn" type="button" title="取消">取消</button>
-                                  <button data-btnType="t-save-btn" type="button" title="保存">保存</button>
-                                </div>
-                              </div>`;
-            window.document.body.append(this.captureWorkSpace);
-            first = true;
+            if (window.top.z_capture) {
+                this.captureWorkSpace = window.top.z_capture.captureWorkSpace;
+                this.cutTool = window.top.z_capture.cutTool;
+                window.document.body.append(this.captureWorkSpace);
+            }
+            else {
+                this.captureWorkSpace = window.document.createElement("div");
+                this.captureWorkSpace.setAttribute("id", "z-capture-workspace-0726");
+                this.captureWorkSpace.setAttribute("style", "z-index: 99999999999; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0;");
+                this.captureWorkSpace.innerHTML = `<canvas class="screenCanvas" style="height: 100%;width: 100%"></canvas>`;
+                window.document.body.append(this.captureWorkSpace);
+                this.cutTool = window.document.createElement("div");
+                this.cutTool.setAttribute("class", "cut-tool");
+                this.cutTool.setAttribute("style", "width: fit-content;position: absolute;background-color: white;display: flex;align-items: center;justify-content: space-around;");
+                this.cutTool.innerHTML = `<style> 
+                                               #z-capture-workspace-0726 button {width: 28px; height: 25px; border: none;vertical-align: bottom;cursor:pointer;background-color: white;fill: #767676;}
+                                               #z-capture-workspace-0726 button:hover {background-color: #f0f0f0;fill: #2196F3;}
+                                               #z-capture-workspace-0726 button svg{width: 100%; height: 100%;}
+                                           </style>
+                                           <div class="tool-left">
+                                              <button data-btnType="t-pen-btn" type="button" title="自定义-画笔">${icons.pen}</button>
+                                              <button data-btnType="t-rect-btn" type="button" title="矩形-画框">${icons.rect}</button>
+                                              <button data-btnType="t-clear-btn" type="button" title="清空画布">${icons.eraser}</button>
+                                           </div>
+                                           <span class="tool-fg" style="display: inline-block;width: 1px;border-right: 1px solid #a9a3a3;height: 18px;margin: 0 8px;"></span>
+                                           <div class="tool-right">
+                                              <button data-btnType="t-cancel-btn" type="button" title="取消">${icons.cancel}</button>
+                                              <button data-btnType="t-save-btn" type="button" title="保存">${icons.save}</button>
+                                           </div>`;
+                first = true;
+            }
         }
         this.canvas = (_a = this.captureWorkSpace.getElementsByTagName("canvas")) === null || _a === void 0 ? void 0 : _a[0];
         this.context = (_b = this.canvas) === null || _b === void 0 ? void 0 : _b.getContext("2d");
-        this.cutTool = (_c = this.captureWorkSpace.getElementsByClassName("cut-tool")) === null || _c === void 0 ? void 0 : _c[0];
+        this.cutTool = this.cutTool || ((_c = this.captureWorkSpace.getElementsByClassName("cut-tool")) === null || _c === void 0 ? void 0 : _c[0]);
         if (first) {
             //截图编辑工具区域按钮
-            (_d = this.cutTool.querySelector("button")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", (e) => {
+            this.cutTool.addEventListener("click", (e) => {
                 let target = e.target;
                 if (target.tagName !== "BUTTON") {
                     target = target.closest("button");
@@ -135,10 +117,14 @@ class ZCapture {
                         //画笔
                         case "t-pen-btn":
                             this[selPen]();
+                            this.cutTool.querySelector("button[data-btnType='t-rect-btn']").style.fill = "#767676";
+                            target.style.fill = "#3355ff";
                             break;
                         //画框
                         case "t-rect-btn":
                             this[selRect]();
+                            this.cutTool.querySelector("button[data-btnType='t-pen-btn']").style.fill = "#767676";
+                            target.style.fill = "#3355ff";
                             break;
                         //清空
                         case "t-clear-btn":
@@ -168,77 +154,102 @@ class ZCapture {
                 this[rightCloseCut](e);
             });
         }
+        this.cutTool.remove();
     }
-    static init(option) {
-        return new ZCapture(option);
+    static capture(option) {
+        let z_capture = window.top.z_capture;
+        if (!z_capture) {
+            z_capture = new ZCapture();
+            window.top.z_capture = z_capture;
+        }
+        return z_capture.capture(option);
     }
-    [capture]() {
+    capture(option) {
+        this.option = Object.assign({}, defaultOption, (option || {}));
         //全屏截图前事件
-        const before = this.option.before && this.option.before();
+        const before = this.option.before();
         if (!before) {
             return false;
         }
-        if (this.shotPlugin === "mediaDevices") {
-            const video = window.document.createElement("video");
+        if (this.option.engine === "mediaDevices") {
+            const video = document.createElement("video");
             const gdmOptions = {
-                video: true,
+                video: {
+                    // 尽量使用显示器的最大分辨率
+                    width: { ideal: window.screen.width },
+                    height: { ideal: window.screen.height },
+                    frameRate: { ideal: 30 } // 可根据需求调整帧率
+                },
                 preferCurrentTab: true
             };
             const mediaDevices = navigator.mediaDevices;
             mediaDevices.getDisplayMedia(gdmOptions).then((captureStream) => {
-                //截图开始事件
-                this.option.start && this.option.start();
+                // 截图开始事件
+                this.option.start();
                 video.srcObject = captureStream;
-                //500毫秒的延时是为了关闭录频提示框
-                setTimeout(() => {
+                // 确保视频流加载完成
+                video.onloadedmetadata = () => {
                     video.play().then(() => {
                         if (this.canvas && this.context) {
-                            this.canvas.width = window.document.body.clientWidth;
-                            this.canvas.height = window.document.body.clientHeight;
-                            this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.height);
+                            // 设置 canvas 宽高为视频分辨率的设备像素比版本
+                            const scale = window.devicePixelRatio || 1;
+                            const videoWidth = video.videoWidth * scale;
+                            const videoHeight = video.videoHeight * scale;
+                            this.canvas.width = videoWidth;
+                            this.canvas.height = videoHeight;
+                            // 绘制高分辨率的截图
+                            this.context.drawImage(video, 0, 0, videoWidth, videoHeight);
                         }
-                        //进入截图界面，初始化状态
+                        // 进入截图界面，初始化状态
                         this[intoShot]();
+                        // 停止捕获的媒体流
                         captureStream.getTracks().forEach((track) => track.stop());
                         video.remove();
-                        //截图完成
-                        this.option.end && this.option.end();
                     });
-                }, 500);
-                //用户取消共享，会抛出异常
+                };
             }).catch((err) => {
-                //异常
-                this.option.error && this.option.error(err);
+                // 异常处理
+                this.option.error(err);
                 if (err) {
                     let e = err.toString();
                     if (~e.indexOf("NotAllowedError: Permission denied")) {
-                        console.log("用户取消共享屏幕，截屏失败");
+                        console.warn("用户取消共享屏幕，截屏失败");
                     }
                     else {
                         console.error("Error: " + err);
                     }
                 }
-                //出现异常，关闭截图
+                // 出现异常，关闭截图
                 this[closeCut]();
             });
         }
         else {
             //截图开始事件
-            this.option.start && this.option.start();
-            html2canvas(window.document.getElementsByTagName("body")[0], {
+            this.option.start();
+            //调整清晰度
+            html2canvas(document.body, {
                 backgroundColor: 'white',
-                useCORS: true, //支持图片跨域
-                scale: 1 //设置放大倍数
+                useCORS: true, // 支持图片跨域
+                scale: window.devicePixelRatio || 1, // 设置为设备像素比，提升清晰度
             }).then((canvas) => {
                 if (this.canvas && this.context) {
-                    this.canvas.width = window.document.body.clientWidth;
-                    this.canvas.height = window.document.body.clientHeight;
-                    this.context.drawImage(canvas, 0, 0, this.canvas.width, this.canvas.height);
+                    // 获取原始 canvas 的尺寸
+                    const originalWidth = canvas.width;
+                    const originalHeight = canvas.height;
+                    // 设置目标 canvas 的尺寸与原始 canvas 一致
+                    this.canvas.width = originalWidth;
+                    this.canvas.height = originalHeight;
+                    // 清除目标 canvas
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    // 将高分辨率的 canvas 绘制到目标 canvas 上
+                    this.context.drawImage(canvas, 0, 0, originalWidth, originalHeight);
                 }
-                //进入截图界面，初始化状态
+                // 进入截图界面，初始化状态
                 this[intoShot]();
-                //截图完成
-                this.option.end && this.option.end();
+            }).catch((error) => {
+                //异常
+                this.option.error(error);
+                console.error('html2canvas 生成图片失败:', error);
             });
         }
     }
@@ -247,6 +258,9 @@ class ZCapture {
     [intoShot]() {
         var _a;
         this.cutImageStatus = true;
+        if (!window.document.getElementById("z-capture-workspace-0726")) {
+            window.document.body.append(this.captureWorkSpace);
+        }
         //鼠标按下状态
         this.cutDown = false;
         //隐藏截图工具栏状态
@@ -257,8 +271,10 @@ class ZCapture {
         this.canvasState = undefined;
         setTimeout(() => {
             if (this.canvas) {
-                this.cutScreenDataURL = this.canvas.toDataURL();
+                this.cutScreenDataURL = this.canvas.toDataURL('image/png');
                 this[drawImageMask](0, 0, this.canvas.width, this.canvas.height, this.MASK_OPACITY);
+                //截图完成
+                this.option.end(this.cutScreenDataURL);
             }
         }, 50);
     }
@@ -302,17 +318,30 @@ class ZCapture {
             this.context.putImageData(this.canvasState, this.cutShotDataArray[0], this.cutShotDataArray[1]);
         }
     }
+    //校正坐标
+    [correctionCoord](old_x, old_y) {
+        // 获取 Canvas 元素的实际位置
+        const rect = this.canvas.getBoundingClientRect();
+        // 计算事件相对于 Canvas 的坐标
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        // 获取正确的绘制坐标
+        const x = (old_x - rect.left) * scaleX;
+        const y = (old_y - rect.top) * scaleY;
+        return [x, y];
+    }
     //鼠标按下开始
     [cutHandleCanvasMouseDown](event) {
+        let [x, y] = this[correctionCoord](event.clientX, event.clientY);
         //开始截图
         if (!this.cutWaitStatus && this.cutImageStatus) {
-            this.cutInitPos = [event.offsetX, event.offsetY];
+            this.cutInitPos = [x, y];
             this.cutDown = true;
             this.cutMouseState = "cut";
         }
         //编辑截图
-        if (this.canvas && this.context && this.cutWaitStatus && this[isWithinCutShotArea](event.offsetX, event.offsetY)) {
-            this.cutInitPos = [event.offsetX, event.offsetY];
+        if (this.canvas && this.context && this.cutWaitStatus && this[isWithinCutShotArea](x, y)) {
+            this.cutInitPos = [x, y];
             this.cutDown = true;
             //保存画布状态
             let [sx, sy, sw, sh] = this.cutShotDataArray;
@@ -322,7 +351,7 @@ class ZCapture {
                 // 开始绘制路径
                 this.cutMouseState = "line";
                 this.context.beginPath();
-                this.context.moveTo(event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop);
+                this.context.moveTo(x - this.canvas.offsetLeft, y - this.canvas.offsetTop);
             }
             //开始画框
             if (this.cutRectStatus) {
@@ -332,9 +361,10 @@ class ZCapture {
     }
     //鼠标滑动进行
     [cutHandleCanvasMouseMove](event) {
+        let [x, y] = this[correctionCoord](event.clientX, event.clientY);
         if (this.cutDown && this.canvas && this.context) {
-            const endX = event.offsetX;
-            const endY = event.offsetY;
+            const endX = x;
+            const endY = y;
             const [startX, startY] = this.cutInitPos;
             const rectWidth = endX - startX;
             const rectHeight = endY - startY;
@@ -352,7 +382,7 @@ class ZCapture {
                 //划线中
                 case "line":
                     if (this[isWithinCutShotArea](endX, endY)) {
-                        this[drawFreeLine](event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop);
+                        this[drawFreeLine](x - this.canvas.offsetLeft, y - this.canvas.offsetTop);
                     }
                     break;
                 //画框中
@@ -405,8 +435,9 @@ class ZCapture {
                     this.cutDown = false;
                     this.cutWaitStatus = true;
                     if (this.captureWorkSpace && this.cutTool) {
-                        this.cutTool.style.top = event.offsetY + "px";
                         this.captureWorkSpace.appendChild(this.cutTool);
+                        this.cutTool.style.left = (event.clientX - this.cutTool.clientWidth) + "px";
+                        this.cutTool.style.top = event.clientY + "px";
                     }
                     this.cutMouseState = "";
                     break;
@@ -432,12 +463,12 @@ class ZCapture {
     }
     //关闭截图
     [closeCut]() {
-        var _a;
         this.cutImageStatus = false;
         this.cutWaitStatus = false;
-        (_a = this.cutTool) === null || _a === void 0 ? void 0 : _a.remove();
+        console.log("截图关闭..");
+        this.captureWorkSpace.remove();
         //截图之后事件
-        this.option.after && this.option.after();
+        this.option.after();
     }
     [selPen]() {
         if (this.cutWaitStatus) {
@@ -474,9 +505,10 @@ class ZCapture {
                 shotCanvas.height = data.height;
                 shotContext.putImageData(data, 0, 0);
                 //jpeg格式，数据更小
-                this.cutShotDataURL = shotCanvas.toDataURL('image/jpeg');
+                this.cutShotDataURL = shotCanvas.toDataURL('image/png');
+                this.option.error("test-error");
                 //确定保存截图
-                this.option.save && this.option.save(this.cutShotDataURL);
+                this.option.save(this.cutShotDataURL);
             }
             shotCanvas.remove();
             this[closeCut]();
@@ -485,5 +517,5 @@ class ZCapture {
     ;
 }
 
-export { ZCapture };
+export { ZCapture as ZCUtil };
 //# sourceMappingURL=z-capture.mjs.map
