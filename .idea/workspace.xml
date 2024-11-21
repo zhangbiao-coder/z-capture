@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1abea727-e675-497f-9898-1606a789d87a" name="更改" comment="提交说明文档">
+      <change beforePath="D:/project/WebstormProjects/z-capture/.idea/workspace.xml" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/.idea/workspace.xml" afterDir="false" />
       <change beforePath="D:/project/WebstormProjects/z-capture/README.md" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/README.md" afterDir="false" />
+      <change beforePath="D:/project/WebstormProjects/z-capture/src/core/z.capture.ts" beforeDir="false" afterPath="D:/project/WebstormProjects/z-capture/src/core/z.capture.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +132,7 @@
       <workItem from="1730684570270" duration="57748000" />
       <workItem from="1731987219975" duration="4525000" />
       <workItem from="1732002982299" duration="15014000" />
-      <workItem from="1732096684754" duration="12461000" />
+      <workItem from="1732096684754" duration="14008000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -196,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732177807903</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="提交说明文档">
+      <option name="closed" value="true" />
+      <created>1732178122823</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732178122823</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
