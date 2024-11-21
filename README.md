@@ -20,7 +20,7 @@ z-capture是基于html2canvas的一款网页截屏工具，其中使用了两种
 #### **npm命令安装**
 
 ```shell
-npm install axpager
+npm install z-capture
 ```
 
 #### **html页面中直接使用script标签引入，这种方式需要手动添加html2canvas的依赖**
@@ -115,7 +115,10 @@ export interface Option {
 ## 版本
 **现在最新版是1.0.4**
 
-- **1.0.4** `最新`
+- **1.0.5** `最新`
+  升级了文档
+- 
+- **1.0.4** `历史`
   升级了截图的清晰度，增加了对新版css样式的支持
 
 - **1.0.3** `过期`
